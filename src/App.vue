@@ -50,6 +50,8 @@ header {
     position: fixed;
     background-color: #85144b;
     margin: -20px -40px 0 -8px;
+    box-shadow: 0 1px 10px 1px black;
+    color: #eee;
 }
 
 .board {
@@ -65,7 +67,7 @@ header {
     height: 100%;
     width: 10%;
     position: fixed;
-    top: 0;
+    top: 48px;
     bottom: 0;
     background-color: #85144b55;
     font-size: 32px;
@@ -73,9 +75,11 @@ header {
 
 .left {
     left: 0;
+    box-shadow: 1px 10px 20px 5px #555;
 }
 
 .right {
     right: 0;
+    box-shadow: -1px 10px 20px 5px #555;
 }
 </style>

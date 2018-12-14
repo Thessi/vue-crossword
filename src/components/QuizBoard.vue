@@ -51,6 +51,8 @@ export default class QuizBoard extends Vue {
             this.activeWord++;
             this.onWordChange(this.activeWord - 1, this.activeWord);
         }
+        else
+            this.onWordChange(this.activeWord, this.activeWord);
     }
 
     public moveLeft(): void {
@@ -62,6 +64,8 @@ export default class QuizBoard extends Vue {
             this.activeWord--;
             this.onWordChange(this.activeWord + 1, this.activeWord);
         }
+        else
+            this.onWordChange(this.activeWord, this.activeWord);
     }
 
     private onWordChange(oldNum: number, newNum: number) {
@@ -110,7 +114,6 @@ export default class QuizBoard extends Vue {
         this.maxLength = this.board.GetMaxLength();
 
         this.left = window.innerWidth / 2 - (this.getCellSize() / 2) + "px";
-
     }
 }
 </script>
@@ -121,5 +124,6 @@ export default class QuizBoard extends Vue {
         display: grid;
         grid-column-gap: 2px;
         grid-row-gap: 2px;
+        margin-right: 500px;
     }
 </style>
