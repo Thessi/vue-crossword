@@ -121,6 +121,5 @@ export default class QuizBoard extends Vue {
         display: grid;
         grid-column-gap: 2px;
         grid-row-gap: 2px;
-        overflow: hidden;
     }
 </style>

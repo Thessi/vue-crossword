@@ -1,11 +1,11 @@
 <template>
     <div id="app">
-        <header>
-            <h2 style="float: left">Weihnachtsquiz</h2>
+        <header style="text-algin: center; vertical-align: center;">
+            <h2>Weihnachtsquiz</h2>
         </header>
         <QuizBoard class="board" ref="board"/>
-        <button @click="moveLeft">&lt;</button>
-        <button @click="moveRight">&gt;</button>
+        <button class="navigateButton left" @click="moveLeft">&lt;</button>
+        <button class="navigateButton right" @click="moveRight">&gt;</button>
     </div>
 </template>
 
@@ -19,6 +19,11 @@ import QuizBoard from './components/QuizBoard.vue';
     },
 })
 export default class App extends Vue {
+    private mounted() {
+        const el = document.body;
+        el.classList.add("hideOverflow");
+    }
+
     private moveRight() {
         (this.$refs.board as QuizBoard).moveRight();
     }
@@ -41,9 +46,10 @@ export default class App extends Vue {
 
 header {
     height: 60px;
-    width: 100%;
-    background-color: #89cccc;
-    margin: -8px -40px 0 -8px;
+    width: 105%;
+    position: fixed;
+    background-color: #85144b;
+    margin: -20px -40px 0 -8px;
 }
 
 .board {
@@ -52,5 +58,24 @@ header {
     padding: 0 5px 20px 5px;
     width: 100%;
     
+}
+
+.navigateButton {
+    border: none;
+    height: 100%;
+    width: 10%;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    background-color: #85144b55;
+    font-size: 32px;
+}
+
+.left {
+    left: 0;
+}
+
+.right {
+    right: 0;
 }
 </style>
