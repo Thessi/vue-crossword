@@ -101,7 +101,7 @@ export default class QuizBoard extends Vue {
 
     private mounted() {
         this.boardService = new BoardService();
-        this.board = this.boardService.GetQuizByName("toni");
+        this.board = this.boardService.GetQuizByName("board1");
 
         this.rowNum = this.board.GetLongestWord();
         this.colNum = this.board.words.length;

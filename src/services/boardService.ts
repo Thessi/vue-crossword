@@ -4,26 +4,26 @@ export default class BoardService {
     private quizBoards: Board[] = [];
 
     constructor() {
-        const toniBoard = new Board("toni");
-        toniBoard.AddWord("2", 0);
-        toniBoard.AddWord("PLANKALKÜL", 4);
-        toniBoard.AddWord("BJARNE", 1);
-        toniBoard.AddWord("SQL", 1);
-        toniBoard.AddWord("PHP", 1);
-        toniBoard.AddWord("-", 0, true);
-        toniBoard.AddWord("E", 0);
-        toniBoard.AddWord("X", 0);
-        toniBoard.AddWord("8", 0);
-        toniBoard.AddWord("9", 0);
-        toniBoard.AddWord("TURING", 2);
-        toniBoard.AddWord("-", 0, true);
-        toniBoard.AddWord("0", 0);
-        toniBoard.AddWord("7", 0);
-        toniBoard.AddWord("1941", 2);
-        toniBoard.AddWord("KUWAIT", 2);
-        toniBoard.AddWord("J", 0);
+        const board1 = new Board("board1");
+        board1.AddWord("2", 0);
+        board1.AddWord("PLANKALKÜL", 4);
+        board1.AddWord("BJARNE", 1);
+        board1.AddWord("SQL", 1);
+        board1.AddWord("PHP", 1);
+        board1.AddWord("-", 0, true);
+        board1.AddWord("E", 0);
+        board1.AddWord("X", 0);
+        board1.AddWord("8", 0);
+        board1.AddWord("9", 0);
+        board1.AddWord("TURING", 2);
+        board1.AddWord("-", 0, true);
+        board1.AddWord("0", 0);
+        board1.AddWord("7", 0);
+        board1.AddWord("1941", 2);
+        board1.AddWord("KUWAIT", 2);
+        board1.AddWord("J", 0);
 
-        this.quizBoards.push(toniBoard);
+        this.quizBoards.push(board1);
     }
 
     public GetQuizByName(name: string): Board {
