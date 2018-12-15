@@ -59,7 +59,6 @@ header {
     top: 100px;
     padding: 0 5px 20px 5px;
     width: 100%;
-    
 }
 
 .navigateButton {
@@ -69,7 +68,7 @@ header {
     position: fixed;
     top: 48px;
     bottom: 0;
-    background-color: #85144b55;
+    background-color: #001f3f55;
     font-size: 32px;
 }
 

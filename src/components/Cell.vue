@@ -2,7 +2,6 @@
     <input type="text" v-if="fixedText" class="cell disabled" disabled :value="fixedText"/>
     <input type="text" v-else v-model="text" class="cell" ref="cell" :style="{backgroundColor: solved ? '#3D9970' : '#fff'}" maxlength="1" 
         @keyup.delete="$emit('delete')"/>
-    <!-- <div class="cell"></div> -->
 </template>
 
 <script lang="ts">

@@ -9,14 +9,11 @@ export default class Word {
 
     constructor(public value: string,
                 public center: number,
-                public fixed: boolean = false,
-                public active: boolean = false) {
+                public question: string,
+                public fixed: boolean = false) {
                     this.wordInput  = new Array<string>(value.length);
                     this.id = Word.wordIndex++;
                     this.letters = value.split("").map((letter: string, index: number) =>
                         new Letter(letter, this.id + "/" + index));
                 }
-
-    // public setCharacter(char: string, index: number): boolean {
-    // }
 }

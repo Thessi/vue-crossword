@@ -8,8 +8,8 @@ export default class Board {
         this.words = [];
     }
 
-    public AddWord(word: string, center: number, fixed?: boolean) {
-        this.words.push(new Word(word, center, fixed));
+    public AddWord(word: string, center: number, question: string, fixed?: boolean) {
+        this.words.push(new Word(word, center, question, fixed));
     }
 
     public GetCenter(): number {
