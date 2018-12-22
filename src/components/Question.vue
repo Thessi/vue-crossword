@@ -1,8 +1,11 @@
 <template>
-    <div class="questionText">
-        <p class="question-num">{{questionNum}}.</p>
-        <p class="text-left" v-html="text"></p>
-        <button @click="$emit('answer')">Answer</button>
+    <div>
+        <div class="questionOverlay"></div>
+        <div class="questionText">
+            <p class="question-num">{{questionNum}}.</p>
+            <p class="text-left" v-html="text"></p>
+            <button @click="$emit('answer')">Antwort</button>
+        </div>
     </div>
 </template>
 
@@ -25,32 +28,42 @@ export default class Question extends Vue {
 
     .text-left {
         text-align: left;
-        background-color: #aaa;
+        color: #fff;
+        font-weight: 700;
+        // border: 1px #eee solid;
+        background-color: #000000aa;
     }
 
     .questionText {
-        margin: auto;
-        height: 500px;
+        position: absolute;
+        padding: 0 10%;
+        left: 50%;
+        max-width: 80%;
+        transform: translateX(-50%);
         font-size: 18px;
-        vertical-align: middle;
         z-index: 10000;
     }
 
     button {
-        position: absolute;
-        bottom: 20%;
-        left: 50%;
-        transform: translateX(-50%);
         width: 200px;
-        height: 10%;
+        height: 15%;
         border: none;
         font-size: 32px;
-        background-color: #001f3fcc;
-        border: solid 1px #111111;
-        color: #aaa;
+        background-color: #000;
+        border: 1px #eee solid;
+        color: #fff;
+        z-index: 1000;
     }
 
     button:hover {
         background-color: #001f3fff;
+    }
+
+    .questionOverlay {
+        position: fixed;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(90, 101, 107, 0.664);
     }
 </style>

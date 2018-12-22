@@ -1,6 +1,6 @@
 <template>
     <input type="text" v-if="fixedText" class="cell disabled" disabled :value="fixedText"/>
-    <input type="text" v-else v-model="text" class="cell" ref="cell" :style="{backgroundColor: solved ? '#3D9970' : '#fff'}" maxlength="1" 
+    <input type="text" v-else v-model="text" class="cell" ref="cell" :style="{backgroundColor: solved ? '#3D9970' : active ? '#55bcc988' : '#fff'}" maxlength="1" 
         @keyup.delete="$emit('delete')"/>
 </template>
 
@@ -11,6 +11,7 @@ import { Component, Prop, Vue, Watch } from "vue-property-decorator";
 export default class Cell extends Vue {
     @Prop() private fixedText: string;
     @Prop() private solved: boolean;
+    @Prop() private active: boolean;
 
     private text: string = "";
 

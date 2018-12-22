@@ -3,16 +3,14 @@
         <div class="board" ref="board" :style="{gridAutoColumns: getCellSizeString, gridAutoRows: getCellSizeString, left: left}">
             <template v-for="(word, colIndex) in board.words">
                 <Cell v-for="(letter, rowIndex) in word.letters" :key="letter.id" :ref="colIndex + '/' + rowIndex"
-                    :fixedText="word.fixed ? letter.letter : ''" :solved="word.solved"
+                    :fixedText="word.fixed ? letter.letter : ''" :solved="word.solved" :active="colIndex === activeWordIndex"
                     @valueChanged="valueChanged($event, colIndex, rowIndex)" @delete="jumpBack(colIndex, rowIndex)"
                     :style="{gridRow: (rowIndex + getRowStartForWord(word) + 1).toString(), gridColumn: colIndex + 1}">
                 </Cell>
             </template>
         </div>
-        <template v-if="questionActive">
-            <div class="questionOverlay"></div>
-            <Question :text="!activeWord ? '' : activeWord.question" :questionNum="realWordIndex" @answer="onAnswer"></Question>
-        </template>
+        <Question v-if="questionActive" :text="!activeWord ? '' : activeWord.question" 
+        :questionNum="realWordIndex" @answer="onAnswer" />
     </div>
 </template>
 
@@ -27,7 +25,7 @@ import Word from "../model/word";
 @Component({
   components: {
     Cell,
-    Question
+    Question,
   },
 })
 export default class QuizBoard extends Vue {
@@ -44,9 +42,8 @@ export default class QuizBoard extends Vue {
     private questionActive = true;
 
     get realWordIndex(): number {
-        var index = this.activeWordIndex + 1;
-
-        var index = index - this.board.words.slice(0, index).filter((value: Word) => value.fixed).length;
+        const index = (this.activeWordIndex + 1) - this.board.words
+            .slice(0, this.activeWordIndex + 1).filter((value: Word) => value.fixed).length;
 
         return index;
     }
@@ -74,7 +71,7 @@ export default class QuizBoard extends Vue {
         else if (this.activeWordIndex < this.colNum - 1 && !this.board.words[this.activeWordIndex + 1].fixed)
             this.activeWordIndex++;
 
-        this.left = window.innerWidth / 2 - (this.getCellSize() / 2) - (this.getCellSize() * this.activeWordIndex) + "px";
+        this.alignBoard();
         this.questionActive = true;
     }
 
@@ -84,8 +81,13 @@ export default class QuizBoard extends Vue {
         else if (this.activeWordIndex > 0 && !this.board.words[this.activeWordIndex - 1].fixed)
             this.activeWordIndex--;
 
-        this.left = window.innerWidth / 2 - (this.getCellSize() / 2) - (this.getCellSize() * this.activeWordIndex) + "px";
+        this.alignBoard();
         this.questionActive = true;
+    }
+
+    private alignBoard(): void {
+        this.left = window.innerWidth / 2 - (this.getCellSize() / 2) -
+            (this.getCellSize() * this.activeWordIndex) + "px";
     }
 
     private changeWordFocus(newNum: number) {
@@ -140,15 +142,5 @@ export default class QuizBoard extends Vue {
         grid-column-gap: 2px;
         grid-row-gap: 2px;
         margin: -3% 500px 0 -8px
-    }
-
-    .questionOverlay {
-        position: fixed;
-        top: 0;
-        padding-left: 10%;
-        padding-right: 10%;
-        height: 100%;
-        width: 100%;
-        background-color: #85144b33;
     }
 </style>
