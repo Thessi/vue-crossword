@@ -3,7 +3,7 @@
         <header>
             <h2>Weihnachtsquiz</h2>
         </header>
-        <QuizBoard class="board" ref="board"/>
+        <QuizBoard v-if="boardName" class="board" ref="board" :name="boardName"/>
         <button class="navigateButton left" @click="moveLeft">&lt;</button>
         <button class="navigateButton right" @click="moveRight">&gt;</button>
     </div>
@@ -19,12 +19,20 @@ import QuizBoard from './components/QuizBoard.vue';
     },
 })
 export default class App extends Vue {
+    private boardName: string = "";
+
     private moveRight() {
         (this.$refs.board as QuizBoard).moveRight();
     }
 
     private moveLeft() {
         (this.$refs.board as QuizBoard).moveLeft();
+    }
+
+    private mounted() {
+        const uri = window.location.search.substring(1);
+        const params = new URLSearchParams(uri);
+        this.boardName = params.get("name") || "";
     }
 }
 </script>
@@ -60,7 +68,7 @@ header {
 
 .board {
     position: absolute;
-    top: 60px;
+    top: 100px;
     padding: 0 5px 20px 5px;
     width: 100%;
 }

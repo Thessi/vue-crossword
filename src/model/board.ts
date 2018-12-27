@@ -12,6 +12,10 @@ export default class Board {
         this.words.push(new Word(word, center, question, fixed));
     }
 
+    public GetSolution(): string {
+        return this.words.map((w: Word) => w.value[w.center]).join("");
+    }
+
     public GetCenter(): number {
         return Math.max(...this.words.map<number>((word: Word) => word.center));
     }

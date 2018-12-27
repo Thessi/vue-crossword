@@ -30,12 +30,12 @@ export default class Question extends Vue {
         text-align: left;
         color: #fff;
         font-weight: 700;
-        // border: 1px #eee solid;
         background-color: #000000aa;
     }
 
     .questionText {
         position: absolute;
+        top: -50px;
         padding: 0 10%;
         left: 50%;
         max-width: 80%;

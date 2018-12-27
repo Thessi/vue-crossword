@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="!solved">
         <div class="board" ref="board" :style="{gridAutoColumns: getCellSizeString, gridAutoRows: getCellSizeString, left: left}">
             <template v-for="(word, colIndex) in board.words">
                 <Cell v-for="(letter, rowIndex) in word.letters" :key="letter.id" :ref="colIndex + '/' + rowIndex"
@@ -11,6 +11,10 @@
         </div>
         <Question v-if="questionActive" :text="!activeWord ? '' : activeWord.question" 
         :questionNum="realWordIndex" @answer="onAnswer" />
+    </div>
+    <div v-else>
+        <h1>Fertig!</h1>
+        <span class="solved">{{board.GetSolution()}}</span>
     </div>
 </template>
 
@@ -29,10 +33,11 @@ import Word from "../model/word";
   },
 })
 export default class QuizBoard extends Vue {
-    private activeWordIndex: number = 0;
+    @Prop() private name: string;
 
     private boardService: BoardService;
 
+    private activeWordIndex: number = 0;
     private board: Board = new Board("");
     private rowNum: number = 1;
     private colNum: number = 1;
@@ -40,6 +45,27 @@ export default class QuizBoard extends Vue {
     private maxLength: number = 0;
     private left: string = "0px";
     private questionActive = true;
+    private solved = false;
+
+    public moveRight(): void {
+        if (this.activeWordIndex < this.colNum - 2 && this.board.words[this.activeWordIndex + 1].fixed)
+            this.activeWordIndex += 2;
+        else if (this.activeWordIndex < this.colNum - 1 && !this.board.words[this.activeWordIndex + 1].fixed)
+            this.activeWordIndex++;
+
+        this.alignBoard();
+        this.questionActive = true;
+    }
+
+    public moveLeft(): void {
+        if (this.activeWordIndex > 1 && this.board.words[this.activeWordIndex - 1].fixed)
+            this.activeWordIndex -= 2;
+        else if (this.activeWordIndex > 0 && !this.board.words[this.activeWordIndex - 1].fixed)
+            this.activeWordIndex--;
+
+        this.alignBoard();
+        this.questionActive = true;
+    }
 
     get realWordIndex(): number {
         const index = (this.activeWordIndex + 1) - this.board.words
@@ -63,26 +89,6 @@ export default class QuizBoard extends Vue {
 
     private getCellSize(): number {
         return (window.innerHeight - 200) / this.maxLength;
-    }
-
-    public moveRight(): void {
-        if (this.activeWordIndex < this.colNum - 2 && this.board.words[this.activeWordIndex + 1].fixed)
-            this.activeWordIndex += 2;
-        else if (this.activeWordIndex < this.colNum - 1 && !this.board.words[this.activeWordIndex + 1].fixed)
-            this.activeWordIndex++;
-
-        this.alignBoard();
-        this.questionActive = true;
-    }
-
-    public moveLeft(): void {
-        if (this.activeWordIndex > 1 && this.board.words[this.activeWordIndex - 1].fixed)
-            this.activeWordIndex -= 2;
-        else if (this.activeWordIndex > 0 && !this.board.words[this.activeWordIndex - 1].fixed)
-            this.activeWordIndex--;
-
-        this.alignBoard();
-        this.questionActive = true;
     }
 
     private alignBoard(): void {
@@ -109,9 +115,8 @@ export default class QuizBoard extends Vue {
 
         if (word.wordInput.join("") === word.value) {
             word.solved = true;
-            if (this.board.words.every((w: Word) => w.solved)) {
-                // Trigger success
-            }
+            if (this.board.words.every((w: Word) => w.solved))
+                this.solved = true;
         }
         else
             word.solved = false;
@@ -122,15 +127,12 @@ export default class QuizBoard extends Vue {
 
     private mounted() {
         this.boardService = new BoardService();
-        this.board = this.boardService.GetQuizByName("board1");
-
+        this.board = this.boardService.GetQuizByName(this.name);
         this.rowNum = this.board.GetLongestWord();
         this.colNum = this.board.words.length;
         this.center = this.board.GetCenter();
-
         this.maxLength = this.board.GetMaxLength();
-
-        this.left = window.innerWidth / 2 - (this.getCellSize() / 2) + "px";
+        this.alignBoard();
     }
 }
 </script>
@@ -142,5 +144,11 @@ export default class QuizBoard extends Vue {
         grid-column-gap: 2px;
         grid-row-gap: 2px;
         margin: -3% 500px 0 -8px
+    }
+
+    .solved {
+        top: 50%;
+        width: 100%;
+        font-size: 20px;
     }
 </style>

@@ -2,7 +2,7 @@ import Letter from "./letter";
 
 export default class Word {
     private static wordIndex: number = 0;
-    public solved: boolean = false;
+    public solved: boolean;
     public wordInput: string[];
     public id: number;
     public letters: Letter[];
@@ -15,5 +15,6 @@ export default class Word {
                     this.id = Word.wordIndex++;
                     this.letters = value.split("").map((letter: string, index: number) =>
                         new Letter(letter, this.id + "/" + index));
+                    this.solved = fixed;
                 }
 }
